@@ -4,6 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>מחשבוני הגנה מאש</title>
+
+  <!-- Google Analytics 4 -->
+  <!-- להחליף את G-XXXXXXXXXX ב-Measurement ID שלך מ-analytics.google.com -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+
   <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     /* ═══ RESET ═══ */
@@ -1099,6 +1110,7 @@ function calculate(){
     document.getElementById('classSub').textContent   = fl < LOW
       ? `${fmt(fl)} קק"ל/מ"ר – פחות מ-40,000 קק"ל/מ"ר`
       : `${fmt(fl)} קק"ל/מ"ר – 40,000 קק"ל/מ"ר ומעלה`;
+    if(typeof gtag === 'function') gtag('event', 'fire_load_calculated', { fire_load: Math.round(fl), classification: fl < LOW ? 'low' : 'normal' });
   } else {
     document.getElementById('r-fl').textContent = '—';
     box.className = 'class-box';
@@ -1111,6 +1123,7 @@ function showPage(id, btn){
   document.querySelectorAll('.nav-item').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   if(btn) btn.classList.add('active');
+  if(typeof gtag === 'function') gtag('event', 'calculator_view', { calculator_name: id });
 }
 
 /* ─── INIT ─── */
@@ -1391,6 +1404,7 @@ function n30CalcManual(){
         <div style="font-size:.8rem;margin-top:3px;color:var(--muted)">דוגמאות: ${ci.examples}</div>
       </div>
     </div>`;
+  if(typeof gtag === 'function') gtag('event', 'nfpa30_classified', { nfpa30_class: cls });
 }
 
 /* close dropdown on outside click */
